@@ -26,11 +26,15 @@ app.use(function (req, res, next) {
 
 app.get("/getbase64image?", (req, res) => {
   const { data } = req.query;
-  qrcode.toDataURL(data, (err, base64QRCode) => {
-    if (err) throw err;
-    console.log(base64QRCode);
-    res.send({ qrcodedata: base64QRCode });
-  });
+  qrcode.toDataURL(
+    data,
+    { errorCorrectionLevel: "H", quality: 1 },
+    (err, base64QRCode) => {
+      if (err) throw err;
+      console.log(base64QRCode);
+      res.send({ qrcodedata: base64QRCode });
+    }
+  );
 });
 
 const port = process.env.PORT || 3000;
